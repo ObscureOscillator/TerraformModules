@@ -1,0 +1,20 @@
+teams:
+  platform:
+    description: "Platform engineering team"
+    privacy: closed
+    members:
+      octocat: member
+      monalisa: maintainer
+
+  devops:
+    description: "DevOps team"
+    privacy: closed
+    members:
+      hubot: maintainer
+      monalisa: member
+
+  security:
+    description: "Security team — restricted visibility"
+    privacy: secret
+    members:
+      monalisa: maintainer
