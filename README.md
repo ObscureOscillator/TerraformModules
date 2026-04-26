@@ -6,10 +6,12 @@ A collection of reusable Terraform modules for managing infrastructure and SaaS 
 
 ```
 TerraformModules/
-├── modules/                  # Reusable Terraform modules
-│   └── github-organization/  # Manage a GitHub organization's settings
-└── examples/                 # Standalone example projects for each module
-    └── github-organization/  # Full usage example for the github-organization module
+├── modules/                           # Reusable Terraform modules
+│   ├── github-organization/           # Manage a GitHub organization's settings
+│   └── github-organization-members/   # Manage GitHub organization membership
+└── examples/                          # Standalone example projects for each module
+    ├── github-organization/           # Full usage example for the github-organization module
+    └── github-organization-members/   # Full usage example for the github-organization-members module
 ```
 
 ## Modules
@@ -32,6 +34,23 @@ Manages the settings of an existing GitHub organization on github.com using the 
 | Terraform | `>= 1.3.0` |
 | Example | [examples/github-organization](examples/github-organization/) |
 
+### [`github-organization-members`](modules/github-organization-members/)
+
+Manages the membership of an existing GitHub organization using the [`github_membership`](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/membership) resource. Members are declared as a map keyed by GitHub username, making additions, removals, and role changes explicit and diff-friendly.
+
+**Manages:**
+- Organization membership (adding and removing members)
+- Member roles (`member` or `admin`)
+- Destroy behavior (remove vs. downgrade to `member`)
+
+**Does not manage:** organization creation, teams, repositories, or invitations.
+
+| Attribute | Value |
+|-----------|-------|
+| Provider | `integrations/github ~> 6.12` |
+| Terraform | `>= 1.3.0` |
+| Example | [examples/github-organization-members](examples/github-organization-members/) |
+
 ## Examples
 
 Each example under [`examples/`](examples/) is a fully working Terraform root module that demonstrates real-world usage of the corresponding module. They are intended as a reference — copy and adapt them rather than using them directly.
@@ -39,6 +58,7 @@ Each example under [`examples/`](examples/) is a fully working Terraform root mo
 | Example | Module | Description |
 |---------|--------|-------------|
 | [github-organization](examples/github-organization/) | `github-organization` | Configures all organization settings including profile, member permissions, and security defaults |
+| [github-organization-members](examples/github-organization-members/) | `github-organization-members` | Manages a roster of organization members with per-user roles and destroy behavior |
 
 ## Dependency Management
 
