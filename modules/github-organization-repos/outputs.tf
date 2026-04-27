@@ -15,3 +15,14 @@ output "repositories" {
     }
   }
 }
+
+output "environments" {
+  description = "Map of managed environments keyed by 'repo:environment'"
+  value = {
+    for key, env in github_repository_environment.this :
+    key => {
+      id          = env.id
+      environment = env.environment
+    }
+  }
+}
