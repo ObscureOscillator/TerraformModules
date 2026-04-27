@@ -1,0 +1,23 @@
+my-public-library:
+  description: "Open-source Terraform modules for GitHub management"
+  visibility: public
+  homepage_url: "https://my-org.github.io/my-public-library"
+  topics:
+    - terraform
+    - infrastructure-as-code
+    - github
+  has_issues: true
+  has_discussions: true
+  has_projects: false
+  has_wiki: false
+  auto_init: true
+  gitignore_template: Terraform
+  license_template: apache-2.0
+  allow_merge_commit: false
+  allow_squash_merge: true
+  allow_rebase_merge: false
+  squash_merge_commit_title: PR_TITLE
+  squash_merge_commit_message: BLANK
+  delete_branch_on_merge: true
+  allow_update_branch: true
+  vulnerability_alerts: true
