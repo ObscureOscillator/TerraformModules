@@ -47,10 +47,6 @@ variable "repositories" {
     delete_branch_on_merge      = optional(bool, false)
     web_commit_signoff_required = optional(bool, false)
 
-    # ── Security ─────────────────────────────────────────────────────────────
-    # vulnerability_alerts: enable Dependabot alerts for vulnerable dependencies
-    vulnerability_alerts = optional(bool, false)
-
     # ── Pages ────────────────────────────────────────────────────────────────
     # Omit this block entirely to disable GitHub Pages for the repository.
     # build_type: "legacy" (branch-based) or "workflow" (GitHub Actions-driven)
