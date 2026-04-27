@@ -14,8 +14,7 @@ variable "secrets" {
     # Required when visibility = "selected"; ignored otherwise.
     selected_repository_ids = optional(list(number), [])
   }))
-  sensitive = true
-  default   = {}
+  default = {}
 
   validation {
     condition = alltrue([

@@ -16,6 +16,5 @@ variable "secrets" {
     plaintext_value         = string
     selected_repository_ids = optional(list(number), [])
   }))
-  sensitive = true
-  default   = {}
+  default = {}
 }

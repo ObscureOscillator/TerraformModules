@@ -1,6 +1,5 @@
 output "secrets" {
   description = "Map of managed organization secrets keyed by secret name"
-  sensitive   = true
   value = {
     for name, secret in github_actions_organization_secret.this :
     name => {
