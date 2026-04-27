@@ -1,0 +1,5 @@
+legacy-monolith:
+  description: "Decommissioned monolith — archived for reference"
+  visibility: private
+  archived: true
+  archive_on_destroy: true
