@@ -51,6 +51,43 @@ variable "repositories" {
     # vulnerability_alerts: enable Dependabot alerts for vulnerable dependencies
     vulnerability_alerts = optional(bool, false)
 
+    # ── Pages ────────────────────────────────────────────────────────────────
+    # Omit this block entirely to disable GitHub Pages for the repository.
+    # build_type: "legacy" (branch-based) or "workflow" (GitHub Actions-driven)
+    # source is only used when build_type = "legacy"
+    pages = optional(object({
+      build_type = optional(string, "legacy")
+      cname      = optional(string)
+      source = optional(object({
+        branch = string
+        path   = optional(string, "/")
+      }))
+    }))
+
+    # ── Team access ──────────────────────────────────────────────────────────
+    # Map of team slug -> permission level.
+    # Valid permissions: "pull", "triage", "push", "maintain", "admin"
+    teams = optional(map(string), {})
+
+    # ── Environments ─────────────────────────────────────────────────────────
+    # Map of environment name -> configuration.
+    environments = optional(map(object({
+      # wait_timer: minutes to wait before allowing deployments (0–43200)
+      wait_timer          = optional(number, 0)
+      can_admins_bypass   = optional(bool, true)
+      prevent_self_review = optional(bool, false)
+      # reviewers: up to 6 combined teams + users who must approve deployments
+      reviewers = optional(object({
+        teams = optional(list(string), [])
+        users = optional(list(string), [])
+      }))
+      # deployment_branch_policy: restrict which branches can deploy to this env
+      deployment_branch_policy = optional(object({
+        protected_branches     = bool
+        custom_branch_policies = bool
+      }))
+    })), {})
+
     # ── Template source ──────────────────────────────────────────────────────
     # Populate only when creating a repository from a template.
     # template.owner and template.repository identify the template repo.
@@ -123,6 +160,25 @@ variable "repositories" {
       contains(["PR_BODY", "PR_TITLE", "BLANK"], r.merge_commit_message)
     ])
     error_message = "merge_commit_message must be \"PR_BODY\", \"PR_TITLE\", or \"BLANK\"."
+  }
+
+  validation {
+    condition = alltrue([
+      for r in values(var.repositories) :
+      r.pages == null || contains(["legacy", "workflow"], r.pages.build_type)
+    ])
+    error_message = "pages.build_type must be \"legacy\" or \"workflow\"."
+  }
+
+  validation {
+    condition = alltrue([
+      for r in values(var.repositories) :
+      alltrue([
+        for permission in values(coalesce(r.teams, {})) :
+        contains(["pull", "triage", "push", "maintain", "admin"], permission)
+      ])
+    ])
+    error_message = "Team permission must be one of: \"pull\", \"triage\", \"push\", \"maintain\", \"admin\"."
   }
 
   validation {
