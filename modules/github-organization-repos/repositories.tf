@@ -36,6 +36,21 @@ resource "github_repository" "this" {
   web_commit_signoff_required = each.value.web_commit_signoff_required
   vulnerability_alerts        = each.value.vulnerability_alerts
 
+  dynamic "pages" {
+    for_each = each.value.pages != null ? [each.value.pages] : []
+    content {
+      build_type = pages.value.build_type
+      cname      = pages.value.cname
+      dynamic "source" {
+        for_each = pages.value.source != null ? [pages.value.source] : []
+        content {
+          branch = source.value.branch
+          path   = source.value.path
+        }
+      }
+    }
+  }
+
   dynamic "template" {
     for_each = each.value.template != null ? [each.value.template] : []
     content {
