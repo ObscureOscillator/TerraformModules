@@ -34,7 +34,6 @@ resource "github_repository" "this" {
 
   delete_branch_on_merge      = each.value.delete_branch_on_merge
   web_commit_signoff_required = each.value.web_commit_signoff_required
-  vulnerability_alerts        = each.value.vulnerability_alerts
 
   dynamic "pages" {
     for_each = each.value.pages != null ? [each.value.pages] : []
