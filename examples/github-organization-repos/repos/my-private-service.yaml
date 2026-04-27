@@ -1,0 +1,16 @@
+my-private-service:
+  description: "Internal payments microservice"
+  visibility: private
+  has_issues: true
+  has_discussions: false
+  has_projects: false
+  has_wiki: false
+  auto_init: true
+  allow_merge_commit: true
+  allow_squash_merge: true
+  allow_rebase_merge: false
+  merge_commit_title: PR_TITLE
+  merge_commit_message: PR_BODY
+  delete_branch_on_merge: true
+  web_commit_signoff_required: true
+  vulnerability_alerts: true
